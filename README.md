@@ -22,15 +22,6 @@
 **О данных** (для внешней проверки — источники, даты, воспроизводимость), **Справка**
 (как читать зоны/приоритеты).
 
-## Как проверить, что всё работает
-
-```bash
-curl -s https://antidoping-platform.duckdns.org/api/v1/health
-# ожидаемый ответ: {"status":"ok"}
-```
-
-Если ответа нет — см. [DEPLOY.md](DEPLOY.md), раздел «Диагностика».
-
 ## Несущие принципы
 
 - **Модель ранжирует, код решает и формулирует, ИИ собирает и резюмирует новости.** Ни одно
@@ -64,16 +55,6 @@ curl -s https://antidoping-platform.duckdns.org/api/v1/health
 | Автопереобучение | `ml/retrain.py`, `ml/watch_registry.py` (оркестрация; само обучение — см. DEPLOY.md) | ✅ орк. / ⬜ обучение |
 | Тесты | `tests/` | ✅ 74/74 |
 | Роли доступа по пользователям | — | ⬜ отложено (см. LOGIC.md §7) |
-
-## Быстрый старт (локально, одна команда)
-
-```bash
-cp .env.example .env   # заполните APP_PASSWORD, SESSION_SECRET (openssl rand -hex 32), POSTGRES_PASSWORD
-docker compose up -d --build
-```
-
-Откройте http://localhost:8080 — пароль тот, что вы задали в `APP_PASSWORD`.
-Подробности запуска, обновления модели и диагностики — в [DEPLOY.md](DEPLOY.md).
 
 ### Прогон модели/SIAR вручную (без Docker)
 
