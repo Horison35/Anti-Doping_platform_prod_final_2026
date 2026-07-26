@@ -1,0 +1,15 @@
+[Unit]
+Description=Antidoping Platform — файл-триггер автопереобучения (ml/watch_registry.py)
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=deploy_user
+WorkingDirectory=/home/deploy_user/antidoping_platform
+ExecStart=/home/deploy_user/antidoping_platform/.venv/bin/python3 ml/watch_registry.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

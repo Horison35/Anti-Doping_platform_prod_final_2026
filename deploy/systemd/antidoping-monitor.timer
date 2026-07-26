@@ -1,0 +1,10 @@
+[Unit]
+Description=Antidoping Platform — АД-Монитор (таймер, раз в 4 дня)
+
+[Timer]
+OnCalendar=*-*-01/4 06:00:00
+Persistent=true
+RandomizedDelaySec=900
+
+[Install]
+WantedBy=timers.target

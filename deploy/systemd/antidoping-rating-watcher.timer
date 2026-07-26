@@ -1,0 +1,10 @@
+[Unit]
+Description=Antidoping Platform — наблюдатель рейтингов РУСАДА (таймер, еженедельно)
+
+[Timer]
+OnCalendar=Mon *-*-* 04:00:00
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

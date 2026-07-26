@@ -1,0 +1,10 @@
+[Unit]
+Description=Antidoping Platform — АД-Монитор (monitor/run_daily.sh)
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=deploy_user
+WorkingDirectory=/home/deploy_user/antidoping_platform
+ExecStart=/home/deploy_user/antidoping_platform/monitor/run_daily.sh

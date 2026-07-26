@@ -1,0 +1,39 @@
+# requirements.txt · антидопинговая платформа
+# Версии ядра зафиксированы по твоему маку (pip freeze от 07.07.2026) —
+# бит-в-бит воспроизводимость прогона модели. Не поднимать без backtest.
+
+# ── ядро модели и данных (есть на маке) ──
+catboost==1.2.10
+joblib==1.5.3
+numpy==2.4.4
+pandas==2.3.3
+openpyxl==3.1.5
+xlrd==1.2.0
+
+# ── отчёты и дашборды (есть на маке) ──
+plotly==6.5.0
+kaleido==1.2.0            # статические PNG из plotly, по желанию
+
+# ── сеть и БД (есть на маке) ──
+requests==2.32.5
+SQLAlchemy==2.0.46
+alembic==1.18.4
+pydantic==2.12.5
+httpx==0.28.1
+
+# ── тесты (есть на маке) ──
+pytest==9.0.3
+pytest-timeout==2.4.0
+
+# ── ДОУСТАНОВИТЬ (на маке отсутствуют): pip install -r requirements.txt ──
+pdfplumber>=0.11.9        # извлечение рейтинга ОСФ из PDF (siar/osf_report.py)
+fastapi>=0.115            # этап 6 · API
+uvicorn[standard]>=0.30   # этап 6 · сервер API
+psycopg[binary]>=3.1      # PostgreSQL-драйвер (db/loaders/load_ml_run.py — psycopg 3.x)
+psycopg-pool>=3.2         # пул соединений для api/db.py
+itsdangerous>=2.2         # подпись сессионной куки пароль-гейта (api/security.py)
+python-dotenv>=1.0        # секреты из .env
+watchfiles>=0.24          # ml/watch_registry.py — файл-триггер автопереобучения
+
+# Примечание: streamlit==1.56.0 уже стоит на маке — годится как временный
+# внутренний дашборд до React-версии, ничего доустанавливать не нужно.

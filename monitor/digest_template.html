@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АД-Монитор · Антидопинговый дайджест · 01–05.07.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F2D52; --sub:#7C8DA6; --grid:#EEF2F7; --paper:#FFFFFF; --wash:#F7F9FC;
+    --red:#DC2626; --orange:#F59E0B; --green:#10B981;
+    --blue:#2563EB; --blue-deep:#1E3A8A; --blue-soft:#7DD3FC;
+    --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+    --sans:'Inter','Segoe UI',Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--wash);line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{max-width:920px;margin:0 auto;padding:48px 28px 64px;background:var(--paper)}
+  @media print{.page{padding:24px}}
+
+  .masthead{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  .brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .brand h1{font-size:34px;font-weight:800;letter-spacing:-0.5px}
+  .brand .ver{font-family:var(--mono);font-size:13px;color:var(--sub)}
+  .brand h1 .dot{color:var(--blue)}
+  .subtitle{font-size:15px;color:var(--sub);margin-top:4px}
+  .runline{font-family:var(--mono);font-size:12.5px;background:var(--ink);color:#DCE7F5;border-radius:8px;
+    padding:12px 16px;margin:18px 0 0;display:flex;gap:22px;flex-wrap:wrap}
+  .runline b{color:#7DD3FC;font-weight:500}
+
+  section{margin-top:40px}
+  h2{font-size:19px;font-weight:800;letter-spacing:-0.2px;display:flex;align-items:center;gap:10px}
+  h2 .n{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--blue);background:#EAF1FE;
+    border-radius:6px;padding:2px 8px}
+  h3.sub{font-size:14.5px;font-weight:600;margin:22px 0 8px}
+  .lede{font-size:13.5px;color:var(--sub);margin:6px 0 18px}
+  p.body{font-size:14px;margin:0 0 12px}
+  p.body b{font-weight:600}
+  .quote{border-left:3px solid var(--blue);background:var(--wash);border-radius:0 10px 10px 0;
+    padding:12px 16px;margin:10px 0 14px;font-size:13.5px;font-style:italic;color:#33507A}
+  .quote .who{display:block;font-style:normal;font-family:var(--mono);font-size:11px;color:var(--sub);margin-top:6px}
+
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .kpi .card{background:var(--wash);border:1px solid var(--grid);border-radius:12px;padding:16px 16px 14px;position:relative;overflow:hidden}
+  .kpi .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--blue)}
+  .kpi .card.warn::before{background:var(--orange)}
+  .kpi .card.zero::before{background:var(--sub)}
+  .kpi .v{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+  .kpi .card.warn .v{color:var(--orange)}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:4px;line-height:1.35}
+
+  .charts{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:stretch}
+  @media(max-width:760px){.charts{grid-template-columns:1fr}}
+  .panel{background:var(--paper);border:1px solid var(--grid);border-radius:12px;padding:18px 20px}
+  .panel h3{font-size:13.5px;font-weight:600;margin-bottom:2px}
+  .panel .src{font-size:11px;color:var(--sub);font-family:var(--mono);margin-bottom:14px}
+  .donut-wrap{display:flex;align-items:center;gap:18px}
+  .legend{font-size:12.5px}
+  .legend div{display:flex;align-items:center;gap:8px;margin:5px 0;white-space:nowrap}
+  .sw{width:11px;height:11px;border-radius:3px;flex:none}
+  .legend b{font-family:var(--mono);font-weight:500;margin-left:auto}
+  .bars .row{display:grid;grid-template-columns:170px 1fr 34px;align-items:center;gap:10px;margin:9px 0;font-size:12.5px}
+  .bars .track{background:var(--grid);border-radius:6px;height:16px;overflow:hidden}
+  .bars .fill{height:100%;border-radius:6px}
+  .bars .num{font-family:var(--mono);font-size:12px;color:var(--ink);text-align:right}
+
+  .pill{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.3px;
+    padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .pill.ok{background:#DEF7EC;color:#046C4E}
+  .pill.out{background:var(--grid);color:var(--sub)}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead td{font-size:11px;font-family:var(--mono);color:var(--sub);text-transform:uppercase;letter-spacing:.6px;
+    padding:8px 10px;border-bottom:2px solid var(--ink)}
+  tbody td{padding:10px;border-bottom:1px solid var(--grid);vertical-align:top}
+  tbody tr:nth-child(even){background:var(--wash)}
+  td.name{font-weight:600}
+  td.mono{font-family:var(--mono);font-size:12px;white-space:nowrap}
+
+  .rublock{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:760px){.rublock{grid-template-columns:1fr}}
+  .quiet{border:2px dashed var(--sub);border-radius:12px;padding:22px;text-align:center;background:var(--wash)}
+  .quiet .big{font-size:15px;font-weight:600}
+  .quiet .big span{font-family:var(--mono);font-size:34px;font-weight:800;display:block;letter-spacing:-1px;margin:4px 0}
+  .quiet p{font-size:12.5px;color:var(--sub);margin-top:8px}
+
+  .tl{border-left:2px solid var(--grid);margin-left:70px;padding:4px 0}
+  .tl .ev{position:relative;padding:0 0 18px 26px}
+  .tl .ev:last-child{padding-bottom:2px}
+  .tl .ev::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;
+    background:var(--paper);border:3px solid var(--blue)}
+  .tl .ev.f::before{border-color:var(--orange)}
+  .tl .ev.g::before{border-color:var(--sub)}
+  .tl .d{position:absolute;left:-96px;top:3px;width:60px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--sub)}
+  .tl .t{font-size:13.5px}
+  .tl .t b{font-weight:600}
+
+  .flags{background:#FFFBEB;border:1px solid #FCD34D;border-radius:12px;padding:18px 20px}
+  .flags .item{display:flex;gap:12px;padding:10px 0;font-size:13.5px}
+  .flags .marker{font-family:var(--mono);font-size:11px;color:#92400E;flex:none;padding-top:2px}
+
+  .trends{counter-reset:tr;display:grid;gap:12px}
+  .trends .tr{counter-increment:tr;background:var(--wash);border:1px solid var(--grid);border-radius:12px;
+    padding:14px 18px 14px 56px;position:relative;font-size:13.5px}
+  .trends .tr::before{content:counter(tr,decimal-leading-zero);position:absolute;left:16px;top:13px;
+    font-family:var(--mono);font-size:13px;font-weight:500;color:var(--blue)}
+  .trends .tr b{font-weight:600}
+
+  .srcs{font-size:12px;color:var(--sub);columns:2;column-gap:32px}
+  @media(max-width:760px){.srcs{columns:1}}
+  .srcs li{margin:0 0 7px 16px;break-inside:avoid}
+  .srcs a{color:var(--blue);text-decoration:none;word-break:break-all}
+  footer{margin-top:48px;border-top:3px solid var(--ink);padding-top:14px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11.5px;color:var(--sub)}
+  .note{font-size:11.5px;color:var(--sub);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <div class="brand">
+      <h1>АД<span class="dot">·</span>МОНИТОР</h1>
+      <span class="ver">антидопинговый дайджест</span>
+    </div>
+    <div class="subtitle">Еженедельный срез антидопинговой повестки: Россия и мир</div>
+    <div class="runline">
+      <span>период: <b>1 — 5 июля 2026</b></span>
+      <span>подготовлено: <b>05.07.2026</b></span>
+      <span>охват: <b>РУСАДА · WADA · AIU · ITIA · USADA · ISU · СМИ</b></span>
+    </div>
+  </header>
+
+  <!-- 1. KPI -->
+  <section>
+    <h2><span class="n">01</span>Ключевые метрики периода</h2>
+    <p class="lede">В основные показатели входят только события, подтверждённые первичными источниками. Сообщения без подтверждения вынесены в раздел «Непроверенные сигналы».</p>
+    <div class="kpi">
+      <div class="card"><div class="v">1</div><div class="l">Новые международные<br>дисквалификации</div></div>
+      <div class="card zero"><div class="v">0</div><div class="l">Новые российские<br>дисквалификации</div></div>
+      <div class="card"><div class="v">4</div><div class="l">Заявления и решения<br>по российской повестке</div></div>
+      <div class="card"><div class="v">1</div><div class="l">Институциональные<br>события</div></div>
+      <div class="card warn"><div class="v">1</div><div class="l">Непроверенные<br>сигналы</div></div>
+      <div class="card"><div class="v">2 344</div><div class="l">База дисквалификаций РФ,<br>всего записей (ред. 24.06)</div></div>
+    </div>
+  </section>
+
+  <!-- 2. РОССИЙСКИЙ КОНТЕКСТ -->
+  <section>
+    <h2><span class="n">02</span>Российский контекст: заявления и повестка</h2>
+
+    <h3 class="sub">2.1. Дегтярёв: спор WADA–РУСАДА в CAS исчерпан, на очереди — аудит</h3>
+    <p class="body">30 июня министр спорта РФ, глава ОКР Михаил Дегтярёв сообщил, что WADA официально уведомило Минспорт о завершении судебного разбирательства с РУСАДА в Спортивном арбитражном суде — осталось урегулировать вопрос судебных расходов. Это стало возможным после вступления в силу 24 июня новой редакции ФЗ «О физической культуре и спорте в РФ», учитывающей требования Всемирного антидопингового кодекса.</p>
+    <div class="quote">«Суть спора исчерпана. <…> Следующее, что предстоит сделать, — провести аудит РУСАДА. Это должно произойти в этом году. В октябре 2025 года на полях X сессии Конференции сторон Международной конвенции о борьбе с допингом в спорте мы обсуждали с гендиректором WADA Оливье Ниггли предстоящую работу экспертов организации».
+      <span class="who">М. Дегтярёв, 30.06.2026 · телеграм-канал министра · Интерфакс, РИА Новости, Коммерсантъ, Парламентская газета</span></div>
+    <p class="body">Контекст: спор тянулся с сентября 2023-го, когда исполком WADA оставил РУСАДА без полноценного статуса из-за несоответствий российского законодательства кодексу, выявленных виртуальным аудитом 2022 года. Очный аудит ранее анонсировался на первое–второе полугодие 2026-го.</p>
+
+    <h3 class="sub">2.2. Логинова: поправки учитывают кодекс-2027</h3>
+    <p class="body">Гендиректор РУСАДА Вероника Логинова отметила, что при внесении антидопинговых поправок в закон о спорте учтены все изменения нового Всемирного антидопингового кодекса, вступающего в силу 1 января 2027 года.</p>
+
+    <h3 class="sub">2.3. Допуски российских спортсменов расширяются</h3>
+    <p class="body"><b>ISU (30.06):</b> Международный союз конькобежцев частично снял ограничения — с сезона 2026/27 россияне и белорусы смогут выступать в нейтральном статусе, включая командные дисциплины под эгидой AIN. <b>IWF:</b> Дегтярёв поблагодарил Международную федерацию тяжёлой атлетики за допуск российских атлетов к международным соревнованиям. Тяжёлая атлетика при этом входит в тройку лидеров реестра дисквалификаций (см. раздел 03) — расширение международного календаря в этом виде повышает значимость внесоревновательного тестирования.</p>
+
+    <h3 class="sub">2.4. Статистика доступности для тестирования</h3>
+    <p class="body">По данным РУСАДА, за январь–май 2026 года зафиксировано 121 нарушение правил доступности для допинг-тестирования, из них 23 — в мае. Сводка за июнь на момент выпуска не опубликована.</p>
+  </section>
+
+  <!-- 3. СРЕЗ ДАННЫХ -->
+  <section>
+    <h2><span class="n">03</span>Срез данных</h2>
+    <p class="lede">Слева — структура событий периода. Справа — фон: распределения реестра РУСАДА по отбывающим санкции.</p>
+    <div class="charts">
+      <div class="panel">
+        <h3>Типы событий периода</h3>
+        <div class="src">n = 3 · 01–05.07</div>
+        <div class="donut-wrap">
+          <svg width="120" height="120" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#EEF2F7" stroke-width="7"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2563EB" stroke-width="7"
+              stroke-dasharray="33.4 66.6" stroke-dashoffset="25" stroke-linecap="butt"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#7C8DA6" stroke-width="7"
+              stroke-dasharray="33.3 66.7" stroke-dashoffset="91.6" stroke-linecap="butt"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#F59E0B" stroke-width="7"
+              stroke-dasharray="33.3 66.7" stroke-dashoffset="58.3" stroke-linecap="butt"/>
+            <text x="21" y="20.5" text-anchor="middle" font-size="9" font-weight="800" fill="#0F2D52" font-family="Inter,Arial">3</text>
+            <text x="21" y="27" text-anchor="middle" font-size="3.4" fill="#7C8DA6" font-family="Inter,Arial">события</text>
+          </svg>
+          <div class="legend">
+            <div><span class="sw" style="background:#2563EB"></span>Санкции (подтв.)<b>1</b></div>
+            <div><span class="sw" style="background:#7C8DA6"></span>Институциональные<b>1</b></div>
+            <div><span class="sw" style="background:#F59E0B"></span>Непроверенные<b>1</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Реестр РУСАДА · топ видов спорта</h3>
+        <div class="src">реестр отбывающих санкции, ред. 19.06.2026</div>
+        <div class="bars">
+          <div class="row"><span>Бодибилдинг</span><div class="track"><div class="fill" style="width:100%;background:#1E3A8A"></div></div><span class="num">12</span></div>
+          <div class="row"><span>Лёгкая атлетика</span><div class="track"><div class="fill" style="width:67%;background:#2563EB"></div></div><span class="num">8</span></div>
+          <div class="row"><span>Тяжёлая атлетика</span><div class="track"><div class="fill" style="width:58%;background:#2563EB"></div></div><span class="num">7</span></div>
+          <div class="row"><span>Спортивная борьба</span><div class="track"><div class="fill" style="width:50%;background:#5B8DEF"></div></div><span class="num">6</span></div>
+          <div class="row"><span>Пауэрлифтинг</span><div class="track"><div class="fill" style="width:33%;background:#7DD3FC"></div></div><span class="num">4</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="charts" style="margin-top:20px">
+      <div class="panel" style="grid-column:1/-1">
+        <h3>Реестр РУСАДА · топ видов нарушений</h3>
+        <div class="src">ред. 19.06.2026 · пункты Общероссийских антидопинговых правил</div>
+        <div class="bars">
+          <div class="row"><span>Анаболики (S1)</span><div class="track"><div class="fill" style="width:100%;background:#DC2626"></div></div><span class="num">17</span></div>
+          <div class="row"><span>Использование (п. 2.2)</span><div class="track"><div class="fill" style="width:94%;background:#E2503F"></div></div><span class="num">16</span></div>
+          <div class="row"><span>Назначение субстанций (п. 2.8)</span><div class="track"><div class="fill" style="width:76%;background:#F59E0B"></div></div><span class="num">13</span></div>
+          <div class="row"><span>Диуретики (S5)</span><div class="track"><div class="fill" style="width:35%;background:#FBBF24"></div></div><span class="num">6</span></div>
+          <div class="row"><span>Отказ от тестирования (п. 2.3)</span><div class="track"><div class="fill" style="width:18%;background:#FDE68A"></div></div><span class="num">3</span></div>
+        </div>
+        <p class="note">Класс «отказ/фальсификация» пока мал в реестре, но доминирует в санкциях последних недель — и в России, и в международных кейсах периода.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. МЕЖДУНАРОДНЫЕ САНКЦИИ -->
+  <section>
+    <h2><span class="n">04</span>Международные санкции и институты</h2>
+    <p class="lede">Подтверждённые кейсы. Решения июня включены как контекст периода.</p>
+    <table>
+      <thead><tr><td>Статус</td><td>Спортсмен</td><td>Вид спорта</td><td>Нарушение</td><td>Срок</td><td>Орган</td><td>Дата</td></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="pill ok">НОВОЕ</span></td>
+          <td class="name">Локолонг Атиол Доминик<br><span style="font-weight:400;color:var(--sub)">Refugee Team / Юж. Судан</span></td>
+          <td>Лёгкая атлетика</td>
+          <td>Триметазидин + фальсификация мед. документов</td>
+          <td class="mono">8 лет</td>
+          <td class="mono">AIU</td>
+          <td class="mono">01.07</td>
+        </tr>
+        <tr>
+          <td><span class="pill out">КОНТЕКСТ</span></td>
+          <td class="name">Канди Кибивотт<br><span style="font-weight:400;color:var(--sub)">Кения</span></td>
+          <td>Лёгкая атлетика</td>
+          <td>Отказ от тестирования + фальсификация</td>
+          <td class="mono">7 лет</td>
+          <td class="mono">AIU</td>
+          <td class="mono">25.06</td>
+        </tr>
+        <tr>
+          <td><span class="pill out">КОНТЕКСТ</span></td>
+          <td class="name">Вондроушова Маркета<br><span style="font-weight:400;color:var(--sub)">Чехия</span></td>
+          <td>Теннис</td>
+          <td>Отказ от допинг-теста (03.12.2025); отстранение до 21.06.2030</td>
+          <td class="mono">4 года</td>
+          <td class="mono">ITIA</td>
+          <td class="mono">22.06</td>
+        </tr>
+        <tr>
+          <td><span class="pill out">КОНТЕКСТ</span></td>
+          <td class="name">Эдвардс Монзавус «Рэй»<br><span style="font-weight:400;color:var(--sub)">США</span></td>
+          <td>Лёгкая атлетика</td>
+          <td>Соучастие: связь спортсмена с поставщиком тестостерона; содействие следствию по закону Родченкова</td>
+          <td class="mono">2 года</td>
+          <td class="mono">USADA</td>
+          <td class="mono">30.06</td>
+        </tr>
+        <tr>
+          <td><span class="pill out">КОНТЕКСТ</span></td>
+          <td class="name">Цегай Гудаф<br><span style="font-weight:400;color:var(--sub)">Эфиопия</span></td>
+          <td>Лёгкая атлетика</td>
+          <td>Летрозол без заблаговременного ТИ; срок 01.06–30.09.2026</td>
+          <td class="mono">4 мес</td>
+          <td class="mono">AIU</td>
+          <td class="mono">12.06</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Институты и события</h3>
+    <p class="body"><b>AIU (01.07):</b> обновлён глобальный список отстранённых в лёгкой атлетике. <b>WADA (16.06):</b> внеочередное виртуальное заседание исполкома рассмотрело финальный доклад рабочей группы по операционной независимости национальных антидопинговых организаций; ключевая рекомендация — на крупных турнирах отстранить НАДО страны-хозяйки от планирования тестирования, отбора спортсменов и обработки результатов, передав функции независимому органу. Глава USADA Трэвис Тайгарт выступил против, заявив, что изменения ослабят национальные агентства в преддверии Игр-2028. <b>Уимблдон (30.06):</b> Коко Гофф рассказала о жёстком визите допинг-офицера вне заявленного часового окна; ITIA выпустила разъяснение, подтвердив право офицеров тестировать игроков в любое время — на фоне свежего 4-летнего бана Вондроушовой за отказ.</p>
+  </section>
+
+  <!-- 5. РОССИЙСКИЕ ДИСКВАЛИФИКАЦИИ -->
+  <section>
+    <h2><span class="n">05</span>Российские дисквалификации</h2>
+    <div class="rublock">
+      <div class="quiet">
+        <div class="big">Новых решений РУСАДА<span>0</span>за 1–5 июля</div>
+        <p>Последние опубликованные решения — 19 июня (бодибилдинг, две санкции).</p>
+      </div>
+      <div class="panel" style="padding:14px 16px">
+        <h3>Последние именные решения РУСАДА</h3>
+        <div class="src">март–июнь 2026 · для контекста</div>
+        <table style="font-size:12px">
+          <tbody>
+            <tr><td class="name">Волков Дмитрий</td><td>Бодибилдинг</td><td>отказ от пробы</td><td class="mono">4 г. · 25.05</td></tr>
+            <tr><td class="name">Ятманкин Анатолий</td><td>Бодибилдинг</td><td>отказ от пробы</td><td class="mono">4 г. · 15.05</td></tr>
+            <tr><td class="name">Аббасова Лала</td><td>Бокс</td><td>фуросемид (S5)</td><td class="mono">2 г. · 19.03</td></tr>
+            <tr><td class="name">Купцов Георгий</td><td>Тяж. атлетика</td><td>гормон роста (S2)</td><td class="mono">5 л. · 17.03</td></tr>
+            <tr><td class="name">Волков Игорь</td><td>Лёгк. атл. (спорт слепых)</td><td>триметазидин</td><td class="mono">3 г. · 17.03</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ХРОНОЛОГИЯ -->
+  <section>
+    <h2><span class="n">06</span>Хронология периода</h2>
+    <p class="lede">Серые точки — контекст июня, синие — подтверждённые события периода, оранжевые — непроверенные сигналы.</p>
+    <div class="tl">
+      <div class="ev g"><span class="d">16.06</span><div class="t"><b>WADA ExCo.</b> Финальный доклад рабочей группы по независимости НАДО: на крупных турнирах тестирование — под контролем независимого органа. Публичная критика от USADA.</div></div>
+      <div class="ev g"><span class="d">24.06</span><div class="t"><b>РФ · закон.</b> Вступила в силу новая редакция ФЗ «О физической культуре и спорте»: антидопинговое регулирование приведено к требованиям кодекса WADA, включая редакцию 2027 года.</div></div>
+      <div class="ev g"><span class="d">25.06</span><div class="t"><b>AIU.</b> Канди — 7 лет за отказ от тестирования и фальсификацию.</div></div>
+      <div class="ev g"><span class="d">30.06</span><div class="t"><b>Дегтярёв:</b> спор WADA–РУСАДА в CAS исчерпан, аудит РУСАДА — в этом году. <b>ISU:</b> нейтральный допуск россиян с сезона 2026/27. <b>USADA:</b> Эдвардс — 2 года за соучастие. <b>Уимблдон:</b> инцидент Гофф с допинг-офицером; разъяснение ITIA о праве тестировать вне часового окна.</div></div>
+      <div class="ev"><span class="d">01.07</span><div class="t"><b>AIU.</b> Атиол — 8 лет (триметазидин + фальсификация документов). Обновлён глобальный список отстранённых.</div></div>
+      <div class="ev f"><span class="d">03.07</span><div class="t"><b>ЧМ-2026.</b> Сообщения о кленбутероле в пробах 8 игроков сборной Туниса <i>(вторичный источник, без подтверждения FIFA/ITA)</i>.</div></div>
+    </div>
+  </section>
+
+  <!-- 7. НЕПРОВЕРЕННЫЕ СИГНАЛЫ -->
+  <section>
+    <h2><span class="n">07</span>Непроверенные сигналы</h2>
+    <p class="lede">Сообщения без подтверждения официальными источниками. В основные метрики не входят; статус проверяется в следующем выпуске.</p>
+    <div class="flags">
+      <div class="item"><span class="marker">СИГНАЛ-01</span><div><b>Тунис, ЧМ-2026:</b> следы кленбутерола в допинг-пробах восьми футболистов — публикация 3 июля со ссылкой на Daily Mail. Официальных заявлений FIFA/ITA нет.</div></div>
+    </div>
+    <p class="note">Снят с контроля: сигнал о заседании WADA ExCo «1 июля» — при проверке первоисточников установлено, что заседание с обсуждением независимости НАДО состоялось 16 июня; событие перенесено в подтверждённые с корректной датой (см. разделы 04, 06).</p>
+  </section>
+
+  <!-- 8. ТРЕНДЫ -->
+  <section>
+    <h2><span class="n">08</span>Тренды периода</h2>
+    <div class="trends">
+      <div class="tr"><b>Уклонение наказывается жёстче употребления.</b> Канди — 7 лет, Атиол — 8 лет, Вондроушова — 4 года: ключевые кейсы периода — отказ от теста и фальсификация, а не положительная проба. Разъяснение ITIA после инцидента с Гофф закрепляет линию: тестирование возможно в любое время, отказ приравнен к положительной пробе.</div>
+      <div class="tr"><b>Россия — на финишной прямой нормализации с WADA.</b> Закон от 24.06 → завершение спора в CAS (30.06) → аудит РУСАДА до конца 2026 года. Для федераций это означает обновление комплаенс-требований под кодекс-2027 уже в ближайший цикл.</div>
+      <div class="tr"><b>Допуски расширяются — нагрузка на антидопинг растёт.</b> ISU открыл россиянам сезон 2026/27 в нейтральном статусе, IWF допустила тяжелоатлетов. Возвращение международного календаря в видах с высоким историческим уровнем нарушений (тяжёлая атлетика — топ-3 реестра) повышает значимость внесоревновательного тестирования именно там.</div>
+      <div class="tr"><b>Реформа контроля на крупных турнирах.</b> Рекомендация WADA отстранить НАДО стран-хозяек от тестирования на своих турнирах и конфликт с USADA задают главную институциональную интригу перед Играми-2028; развитие — в ближайших выпусках.</div>
+    </div>
+  </section>
+
+  <!-- 9. ИСТОЧНИКИ -->
+  <section>
+    <h2><span class="n">09</span>Источники</h2>
+    <ol class="srcs">
+      <li>Интерфакс: «Дегтярев заявил, что суть спора в CAS между ВАДА и РУСАДА исчерпана» — <a href="https://www.sport-interfax.ru/1099255">sport-interfax.ru</a></li>
+      <li>РИА Новости: «Разбирательство WADA и РУСАДА в CAS завершено» (30.06.2026) — <a href="https://ria.ru/20260630/cas-2101965906.html">ria.ru</a></li>
+      <li>Коммерсантъ: «Спор WADA и РУСАДА завершится после урегулирования вопроса судебных расходов» — <a href="https://www.kommersant.ru/doc/8780426">kommersant.ru</a></li>
+      <li>Парламентская газета: «Дегтярев анонсировал завершение судебных разбирательств между WADA и РУСАДА» — <a href="https://www.pnp.ru/social/degtyarev-anonsiroval-zavershenie-sudebnykh-razbiratelstv-mezhdu-wada-i-rusada.html">pnp.ru</a></li>
+      <li>Ведомости: «WADA уведомило Минспорт России, что спор с РУСАДА близится к завершению» — <a href="https://www.vedomosti.ru/politics/news/2026/06/30/1210010-wada-rusada">vedomosti.ru</a></li>
+      <li>Чемпионат: «Дегтярёв заявил, что спор между ВАДА и РУСАДА близится к завершению»; «Дегтярёв поблагодарил IWF за допуск российских атлетов» — <a href="https://www.championat.com/other/news-6526756">championat.com</a></li>
+      <li>Xinhua: «WADA to reinforce independence of anti-doping program at major events» (17.06.2026) — <a href="https://english.news.cn/20260617/3a7c1150a7264532819950bdc2e7a96d/c.html">english.news.cn</a></li>
+      <li>Athletics Illustrated: «WADA and USADA at it again: Tygart pushed back» — <a href="https://athleticsillustrated.com/wada-and-usada-at-it-again-tygart-pushed-back-on-the-global-authority/">athleticsillustrated.com</a></li>
+      <li>AIU: Global List of Ineligible Persons (обновл. 01.07.2026) — <a href="https://www.athleticsintegrity.org/disciplinary-process/global-list-of-ineligible-persons">athleticsintegrity.org</a></li>
+      <li>Athletics Illustrated: «Refugee team member Dominic Lokolong Atiol banned 8 years» — <a href="https://athleticsillustrated.com/doping-ban-refugee-team-member-dominic-lokolong-atiol-banned-8-years-for-doping-and-tampering/">athleticsillustrated.com</a></li>
+      <li>ITIA: «Markéta Vondroušová suspended for refusing anti-doping test» — <a href="https://www.itia.tennis/news/sanctions/marketa-vondrousova-suspended-for-refusing-anti-doping-test/">itia.tennis</a></li>
+      <li>AIU News: «Former World Record-holder Kandie banned for seven years» — <a href="https://www.athleticsintegrity.org/knowledge-centre/news-archive">athleticsintegrity.org</a></li>
+      <li>Athletics Weekly / ESPN: «Gudaf Tsegay given four-month doping ban» — <a href="https://athleticsweekly.com/news/gudaf-tsegay-given-four-month-doping-ban-1040011620/">athleticsweekly.com</a></li>
+      <li>Honest Sport: Doping in Sport — Bi-Weekly Press Round-up #243 — <a href="https://honestsport.substack.com">honestsport.substack.com</a></li>
+      <li>Чемпионат: «В допинг-пробах восьми футболистов сборной Туниса… обнаружены следы запрещённого вещества» — <a href="https://www.championat.com/football/news-6530768">championat.com</a></li>
+      <li>Sports.ru / ТАСС: «РУСАДА с начала года выявило 121 нарушение правил доступности» (май 2026) — <a href="https://www.sports.ru/doping/news/">sports.ru</a></li>
+      <li>The Hindu: «Wimbledon 2026: Coco Gauff brought to tears by interaction with anti-doping tester».</li>
+      <li>РУСАДА: раздел «Дисквалификации» — <a href="https://rusada.ru/disqualifications/">rusada.ru</a></li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>АД-МОНИТОР · антидопинговый дайджест</span>
+    <span>период 01–05.07.2026 · выпуск от 05.07.2026</span>
+  </footer>
+</div>
+</body>
+</html>

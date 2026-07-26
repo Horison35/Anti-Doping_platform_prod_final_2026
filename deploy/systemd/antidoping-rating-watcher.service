@@ -1,0 +1,10 @@
+[Unit]
+Description=Antidoping Platform — наблюдатель рейтингов РУСАДА (еженедельно)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=deploy_user
+WorkingDirectory=/home/deploy_user/antidoping_platform
+ExecStart=/home/deploy_user/antidoping_platform/.venv/bin/python3 parsers/rusada_rating_watcher.py

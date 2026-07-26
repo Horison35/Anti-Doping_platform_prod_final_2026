@@ -1,0 +1,70 @@
+# СЛОЙ 3/4/5 · PostgreSQL + API + веб-дашборд (STRUCTURE.md).
+# `docker compose up -d` поднимает db + api + frontend одной командой
+# (Definition of Done). Схема db/ddl.sql применяется автоматически ПРИ
+# ПЕРВОЙ инициализации тома; повторно вручную:
+#   docker compose exec -T db psql -U ${POSTGRES_USER:-antidoping} -d ${POSTGRES_DB:-antidoping} < db/ddl.sql
+# Значения ${...} берутся из .env в корне (cp .env.example .env).
+#
+# ЧТО НАМЕРЕННО НЕ В docker-compose (см. DEPLOY.md, «Хостовые сервисы»):
+# АД-Монитор (monitor/run_daily.sh) работает через `claude -p` — headless
+# режим ПОДПИСКИ Claude Code (OAuth-сессия хоста), а не ANTHROPIC_API_KEY;
+# такую сессию нельзя честно упаковать в контейнер без монтирования
+# домашней папки хоста, что хрупко и не переносимо. Поэтому АД-Монитор,
+# наблюдатель рейтингов, файл-вотчер автопереобучения и HTTPS-термация
+# (Nginx+certbot+DuckDNS) — systemd на хосте, тем же способом, что уже
+# работает на этом сервере для сопоставимых процессов. docker-compose
+# отвечает за детерминированную часть без внешних учётных сессий.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-antidoping}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?задайте POSTGRES_PASSWORD в .env}
+      POSTGRES_DB: ${POSTGRES_DB:-antidoping}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/ddl.sql:/docker-entrypoint-initdb.d/10_ddl.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-antidoping} -d ${POSTGRES_DB:-antidoping}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-antidoping}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-antidoping}
+      APP_PASSWORD: ${APP_PASSWORD:?задайте APP_PASSWORD в .env}
+      SESSION_SECRET: ${SESSION_SECRET:?задайте SESSION_SECRET в .env (openssl rand -hex 32)}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-8080}:80"
+
+volumes:
+  pgdata:

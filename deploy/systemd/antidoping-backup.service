@@ -1,0 +1,10 @@
+[Unit]
+Description=Antidoping Platform — ежедневный бэкап PostgreSQL
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=deploy_user
+WorkingDirectory=/home/deploy_user/antidoping_platform
+ExecStart=/home/deploy_user/antidoping_platform/db/backup.sh

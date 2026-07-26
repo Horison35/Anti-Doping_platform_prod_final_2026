@@ -1,0 +1,131 @@
+<svg width="680" viewBox="0 0 680 860" xmlns="http://www.w3.org/2000/svg">
+<title>Полная схема логики проекта</title>
+<style>
+  text{font-family:Inter,'Segoe UI',Arial,sans-serif}
+  .th{font-size:14px;font-weight:500;fill:#0F2D52}
+  .ts{font-size:12px;fill:#7C8DA6}
+  .arr{stroke:#B4B2A9;stroke-width:1.5;fill:none}
+  .c-gray rect{fill:#F1EFE8;stroke:#B4B2A9}
+  .c-purple rect{fill:#EEEDFE;stroke:#7F77DD}
+  .c-teal rect{fill:#E1F5EE;stroke:#1D9E75}
+  .c-red rect{fill:#FCEBEB;stroke:#E24B4A}
+  .c-amber rect{fill:#FAEEDA;stroke:#EF9F27}
+  .c-green rect{fill:#EAF3DE;stroke:#97C459}
+  .c-blue rect{fill:#E6F1FB;stroke:#378ADD}
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#B4B2A9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="0" y="0" width="680" height="860" fill="#FFFFFF"/>
+
+<text class="th" x="20" y="30">1 · Принципы</text>
+<g class="c-gray"><rect x="20" y="40" width="152" height="52" rx="8"/>
+  <text class="th" x="96" y="61" text-anchor="middle">Код считает</text>
+  <text class="ts" x="96" y="81" text-anchor="middle">LLM резюмирует</text></g>
+<g class="c-gray"><rect x="182" y="40" width="152" height="52" rx="8"/>
+  <text class="th" x="258" y="61" text-anchor="middle">База — истина</text>
+  <text class="ts" x="258" y="81" text-anchor="middle">новости — сигнал</text></g>
+<g class="c-gray"><rect x="344" y="40" width="152" height="52" rx="8"/>
+  <text class="th" x="420" y="61" text-anchor="middle">Зона — от модели</text>
+  <text class="ts" x="420" y="81" text-anchor="middle">рейтинг — 2-я ось</text></g>
+<g class="c-gray"><rect x="506" y="40" width="152" height="52" rx="8"/>
+  <text class="th" x="582" y="61" text-anchor="middle">Снапшоты</text>
+  <text class="ts" x="582" y="81" text-anchor="middle">воспроизводимость</text></g>
+
+<text class="th" x="20" y="122">2 · Источники и поток</text>
+<g class="c-gray"><rect x="20" y="132" width="200" height="56" rx="8"/>
+  <text class="th" x="120" y="155" text-anchor="middle">База дисквалификаций</text>
+  <text class="ts" x="120" y="175" text-anchor="middle">российских спортсменов</text></g>
+<g class="c-gray"><rect x="240" y="132" width="200" height="56" rx="8"/>
+  <text class="th" x="340" y="155" text-anchor="middle">Рейтинги РУСАДА</text>
+  <text class="ts" x="340" y="175" text-anchor="middle">ОСФ 142 · регионы 89</text></g>
+<g class="c-purple"><rect x="460" y="132" width="200" height="56" rx="8"/>
+  <text class="th" x="560" y="155" text-anchor="middle">АД-Монитор</text>
+  <text class="ts" x="560" y="175" text-anchor="middle">весь спорт · ежедневно</text></g>
+<line x1="120" y1="188" x2="120" y2="200" class="arr"/>
+<line x1="340" y1="188" x2="340" y2="200" class="arr"/>
+<line x1="560" y1="188" x2="560" y2="200" class="arr"/>
+<line x1="120" y1="200" x2="560" y2="200" class="arr"/>
+<line x1="220" y1="200" x2="220" y2="206" class="arr" marker-end="url(#arrow)"/>
+<g class="c-teal"><rect x="120" y="210" width="200" height="52" rx="8"/>
+  <text class="th" x="220" y="231" text-anchor="middle">Верификация · дедуп</text>
+  <text class="ts" x="220" y="251" text-anchor="middle">инварианты · аудит</text></g>
+<line x1="320" y1="236" x2="356" y2="236" class="arr" marker-end="url(#arrow)"/>
+<g class="c-gray"><rect x="360" y="210" width="200" height="52" rx="8"/>
+  <text class="th" x="460" y="231" text-anchor="middle">PostgreSQL</text>
+  <text class="ts" x="460" y="251" text-anchor="middle">снапшоты · run_id</text></g>
+
+<text class="th" x="20" y="296">3 · Модель и зоны</text>
+<g class="c-teal"><rect x="20" y="306" width="152" height="52" rx="8"/>
+  <text class="th" x="96" y="327" text-anchor="middle">CatBoost</text>
+  <text class="ts" x="96" y="347" text-anchor="middle">ансамбль ×5 · proba</text></g>
+<g class="c-red"><rect x="182" y="306" width="152" height="52" rx="8"/>
+  <text class="th" x="258" y="327" text-anchor="middle">RED</text>
+  <text class="ts" x="258" y="347" text-anchor="middle">всплеск 2 кварталов</text></g>
+<g class="c-amber"><rect x="344" y="306" width="152" height="52" rx="8"/>
+  <text class="th" x="420" y="327" text-anchor="middle">ORANGE</text>
+  <text class="ts" x="420" y="347" text-anchor="middle">повторяемость 8 кв.</text></g>
+<g class="c-green"><rect x="506" y="306" width="152" height="52" rx="8"/>
+  <text class="th" x="582" y="327" text-anchor="middle">GREEN</text>
+  <text class="ts" x="582" y="347" text-anchor="middle">остальное</text></g>
+<text class="ts" x="340" y="380" text-anchor="middle">прогноз — квартальный такт · новости внутри квартала → флаги, не признаки</text>
+
+<text class="th" x="20" y="410">4 · SIAR v2: приоритеты</text>
+<text class="ts" x="340" y="428" text-anchor="middle">зона модели × порог рейтинга: ОСФ — 80 из 100 · регионы — 130 из 190</text>
+<g class="c-red"><rect x="20" y="438" width="152" height="68" rx="8"/>
+  <text class="th" x="96" y="460" text-anchor="middle">Приоритет 1</text>
+  <text class="ts" x="96" y="480" text-anchor="middle">риск + критерии</text>
+  <text class="ts" x="96" y="496" text-anchor="middle">не выполнены</text></g>
+<g class="c-amber"><rect x="182" y="438" width="152" height="68" rx="8"/>
+  <text class="th" x="258" y="460" text-anchor="middle">Приоритет 2</text>
+  <text class="ts" x="258" y="480" text-anchor="middle">риск при сильной</text>
+  <text class="ts" x="258" y="496" text-anchor="middle">работе → образование</text></g>
+<g class="c-blue"><rect x="344" y="438" width="152" height="68" rx="8"/>
+  <text class="th" x="420" y="460" text-anchor="middle">Приоритет 3</text>
+  <text class="ts" x="420" y="480" text-anchor="middle">потенциальный риск:</text>
+  <text class="ts" x="420" y="496" text-anchor="middle">может стать риском</text></g>
+<g class="c-green"><rect x="506" y="438" width="152" height="68" rx="8"/>
+  <text class="th" x="582" y="460" text-anchor="middle">Приоритет 4</text>
+  <text class="ts" x="582" y="480" text-anchor="middle">поддерживать</text>
+  <text class="ts" x="582" y="496" text-anchor="middle">плановый мониторинг</text></g>
+<text class="ts" x="340" y="530" text-anchor="middle">зона внимания: высокий рейтинг с недоборами критериев — пометка без смены приоритета</text>
+<text class="ts" x="340" y="550" text-anchor="middle">доп-критерий: «сигналы мониторинга: N за 30/90 дней» по виду спорта — счётчик, не зона</text>
+
+<text class="th" x="20" y="582">5 · Представление</text>
+<g class="c-gray"><rect x="20" y="592" width="152" height="52" rx="8"/>
+  <text class="th" x="96" y="613" text-anchor="middle">Цвет = зона</text>
+  <text class="ts" x="96" y="633" text-anchor="middle">единый язык экранов</text></g>
+<g class="c-gray"><rect x="182" y="592" width="152" height="52" rx="8"/>
+  <text class="th" x="258" y="613" text-anchor="middle">Топ-N / все записи</text>
+  <text class="ts" x="258" y="633" text-anchor="middle">ничего не скрыто</text></g>
+<g class="c-gray"><rect x="344" y="592" width="152" height="52" rx="8"/>
+  <text class="th" x="420" y="613" text-anchor="middle">Ховер</text>
+  <text class="ts" x="420" y="633" text-anchor="middle">обоснование целиком</text></g>
+<g class="c-gray"><rect x="506" y="592" width="152" height="52" rx="8"/>
+  <text class="th" x="582" y="613" text-anchor="middle">Индекс риска</text>
+  <text class="ts" x="582" y="633" text-anchor="middle">перцентиль (0–100)</text></g>
+
+<text class="th" x="20" y="676">6 · Мониторинг · ежедневно</text>
+<g class="c-purple"><rect x="20" y="686" width="200" height="56" rx="8"/>
+  <text class="th" x="120" y="709" text-anchor="middle">Матрица источников</text>
+  <text class="ts" x="120" y="729" text-anchor="middle">чек-лист RU+EN · триггеры</text></g>
+<g class="c-purple"><rect x="240" y="686" width="200" height="56" rx="8"/>
+  <text class="th" x="340" y="709" text-anchor="middle">Спортивные СМИ</text>
+  <text class="ts" x="340" y="729" text-anchor="middle">РФ + международные</text></g>
+<g class="c-purple"><rect x="460" y="686" width="200" height="56" rx="8"/>
+  <text class="th" x="560" y="709" text-anchor="middle">Доп-критерии риска</text>
+  <text class="ts" x="560" y="729" text-anchor="middle">сигналы по видам спорта</text></g>
+<text class="ts" x="340" y="764" text-anchor="middle">дайджест понятен неспециалисту · без первичного источника не публикуется</text>
+
+<text class="th" x="20" y="794">7 · Эксплуатация</text>
+<g class="c-gray"><rect x="20" y="804" width="152" height="52" rx="8"/>
+  <text class="th" x="96" y="825" text-anchor="middle">Рейтинги</text>
+  <text class="ts" x="96" y="845" text-anchor="middle">еженедельно</text></g>
+<g class="c-gray"><rect x="182" y="804" width="152" height="52" rx="8"/>
+  <text class="th" x="258" y="825" text-anchor="middle">АД-Монитор</text>
+  <text class="ts" x="258" y="845" text-anchor="middle">ежедневно</text></g>
+<g class="c-gray"><rect x="344" y="804" width="152" height="52" rx="8"/>
+  <text class="th" x="420" y="825" text-anchor="middle">ML-прогон</text>
+  <text class="ts" x="420" y="845" text-anchor="middle">квартал + база</text></g>
+<g class="c-gray"><rect x="506" y="804" width="152" height="52" rx="8"/>
+  <text class="th" x="582" y="825" text-anchor="middle">Backtest</text>
+  <text class="ts" x="582" y="845" text-anchor="middle">ежеквартально</text></g>
+</svg>

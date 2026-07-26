@@ -1,0 +1,21 @@
+# секреты
+.env
+# окружение
+.venv/
+__pycache__/
+*.pyc
+# артефакты модели (лежат на маке, в репозиторий не кладём)
+models/
+*.pkl
+# входные данные с ФИО и выгрузки
+*.xlsx
+!reports/examples/*.xlsx
+predictions/
+reports/*
+!reports/examples/
+monitor/inbox/
+monitor/logs/
+# служебное
+.DS_Store
+.ipynb_checkpoints/
+ml/artifacts/*.pkl
