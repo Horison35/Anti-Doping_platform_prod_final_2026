@@ -1,21 +1,25 @@
 # секреты
 .env
+# реальные значения сервера (IP, системный пользователь) — только локально,
+# в репозитории и systemd-юнитах остаются плейсхолдеры <IP_СЕРВЕРА>/deploy_user
+deploy/LOCAL_SERVER.md
 # окружение
 .venv/
 __pycache__/
 *.pyc
-# артефакты модели (лежат на маке, в репозиторий не кладём)
+.pytest_cache/
+# артефакты модели (лежат на маке, в репозиторий не кладём) —
+# включая meta_*.json: модель и её метаданные не публикуются
 models/
 *.pkl
+ml/artifacts/
 # входные данные с ФИО и выгрузки
 *.xlsx
-!reports/examples/*.xlsx
 predictions/
-reports/*
-!reports/examples/
+# отчёты целиком, включая reports/examples/ — не публикуются
+reports/
 monitor/inbox/
 monitor/logs/
 # служебное
 .DS_Store
 .ipynb_checkpoints/
-ml/artifacts/*.pkl
